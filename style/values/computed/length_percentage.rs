@@ -509,7 +509,7 @@ impl LengthPercentage {
     /// Returns the used value.
     #[inline]
     pub fn to_used_value(&self, containing_length: Au) -> Au {
-        Au::from(self.to_pixel_length(containing_length))
+        Au::from_f32_px_truncate(self.to_pixel_length(containing_length).px())
     }
 
     /// Returns the used value as CSSPixelLength.
@@ -522,7 +522,7 @@ impl LengthPercentage {
     #[inline]
     pub fn maybe_to_used_value(&self, container_len: Option<Au>) -> Option<Au> {
         self.maybe_percentage_relative_to(container_len.map(Length::from))
-            .map(Au::from)
+            .map(|p| Au::from_f32_px_truncate(p.px()))
     }
 
     /// If there are special rules for computing percentages in a value (e.g.
